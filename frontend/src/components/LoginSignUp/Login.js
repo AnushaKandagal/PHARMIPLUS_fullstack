@@ -3,6 +3,9 @@ import {Link,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {loginAction} from '../../Actions/auth';
+import * as emailjs from 'emailjs-com'
+
+emailjs.init("user_eUFUzxSrtsRN0aM6v0680");
 
 const Login = ({loginAction, isAuthenticated}) => {
     const [formData, setFormData] = useState({
@@ -56,6 +59,26 @@ const Login = ({loginAction, isAuthenticated}) => {
       <p className="my-1">
         Don't have an account? <Link to="/register">Sign Up</Link>
       </p>
+
+      <a className="my-1" onClick={
+        ()=>{
+          localStorage.setItem('email',email);
+        let res = email.split("@")[0];
+        var templateParams = {
+          to_name: email,
+          message_html: 'Got to this page to set new password http://localhost:3000/changePassword'
+        };
+        console.log(res);
+        emailjs.send('service_sblmtno','template_fdc5zut', templateParams)
+          .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+          }, function(error) {
+              console.log('FAILED...', error);
+        });
+      }
+      }>
+        Forgot password?
+      </a>
         </Fragment>
         
     )

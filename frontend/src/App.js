@@ -10,6 +10,7 @@ import Alert from './components/Layout/Alert';
 import Product from './components/Products/Product';
 import Home from './components/Home/Home';
 import Orders from './components/Orders/Orders';
+import Repass from './components/LoginSignUp/repass';
 //import { Component } from 'react';
 
 //Redux
@@ -43,6 +44,7 @@ const App=() =>{
        <Route exact path='/products' component={Product}></Route>
        <Route exact path='/orders' component={Orders}></Route>
        <Route exact path='/home' component={Home}></Route>
+       <Route exact path='/repass' component={Repass}></Route>
       </Switch>
     </section>
     </Fragment>

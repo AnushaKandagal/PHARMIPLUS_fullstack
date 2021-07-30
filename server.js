@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const Product = require('./Models/Product');
 const Order = require('./Models/Orders');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
 const app = express();
 
 //Comment the below line if your not connecting to DB
@@ -78,4 +79,15 @@ app.post('/api/orderupdate', (req,res)=>{
    let orderId = req.body.orderID;
    Order.update({_id:orderId},{'status':'cancelled'},{upsert:true})
       .then((results)=>console.log(results));
+})
+
+//Update password
+app.post('/api/passwordupdate', (req,res)=>{
+  let userId = req.body.userID;
+  let newpass = req.body.newpass;
+  const salt =  bcrypt.genSalt(10);
+  newpass = bcrypt.hash(newpass, salt);
+  console.log(newpass);
+  User.update({'email':userId},{'password':newpass},{upsert:true})
+     .then((results)=>console.log(results));
 })
